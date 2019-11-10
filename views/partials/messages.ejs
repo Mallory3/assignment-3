@@ -1,0 +1,20 @@
+<!-- creating a partial to display errors on form when filled in information does not validate -->
+<!-- A patial is a piece of markup, or HTML content, that we want to put inside another template file -->
+<!-- From Brad Traversy  -->
+
+<!-- Check to see if errors exist using ejs syntax: we are checking the type and if equal to undefined it means the errors are not there -->
+
+<!-- if typeof errors does not equal undefined, that means that there is an error. We then want to loop through them  with a forEach loop because the variable errors is an array.  -->
+  <!-- to output with ejs need an = -->
+  <!-- added bootstrap code to format error messages so they werent displayed all together on one line from https://getbootstrap.com/docs/4.3/components/alerts/#dismissing -->
+<% if(typeof errors != 'undefined') { %>
+  <% errors.forEach(function(error) { %>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+       <%= error.msg %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  <% }); %>
+<% } %>
+
