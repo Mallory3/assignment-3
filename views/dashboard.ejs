@@ -1,7 +1,9 @@
 <!-- This is what we want to render for the dashboard page -->
 <!-- From Brad Traversy https://github.com/bradtraversy/node_passport_login/blob/master/views/dashboard.ejs  -->
 
-<!-- user.name: once your registered and logged in, you will have access to the user object and all fields we have saved in our database -->
+<!-- user.name: once your registered and logged in, you will have access to the user object and all fields we have saved in our database. Gave access to it in /routes/index with router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', {
+  name: req.user.name
+})); -->
 <h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.name %></p>
+<p class="lead mb-3">Welcome <%= name %></p>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>

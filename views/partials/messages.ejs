@@ -37,3 +37,14 @@
        </button>
      </div>
 <% } %>
+
+<!-- flash message to appear when a login error on login page -->
+<% if(error != '') { %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <%= error %>
+       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+<% } %>
+

@@ -8,10 +8,15 @@ const mongoose = require('mongoose')
 const flash = require('connect-flash')
 //bring in session
 const session = require('express-session')
+//bring in passport
+const passport = require('passport');
 
 
 //initialize app variable with express
 const app = express();
+
+//PASSPORT CONFIG 
+require('./config/passport')(passport);
 
 //conncet to database
 //need the mongoose code higher up, it is used to connect to db (works!);
@@ -45,6 +50,11 @@ app.use(session({
   saveUninitialized: true
 }));
 
+//PASSPORT MIDDLEWARE
+//from passportjs.com website
+app.use(passport.initialize());
+app.use(passport.session());
+
 //CONNECT FLASH MIDDLEWARE
 //gives us access to request.flash
 app.use(flash());
@@ -57,6 +67,8 @@ app.use((req, res, next) => {
   // custom middleware with global variables. We can call the success_msg and error_msg which will come from flash
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
+  //shows flash for login error
+  res.locals.error = req.flash('error');
   next();
 });
 
