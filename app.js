@@ -4,13 +4,18 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 //bring in mongoose
 const mongoose = require('mongoose')
+//bring in flash
+const flash = require('connect-flash')
+//bring in session
+const session = require('express-session')
+
 
 //initialize app variable with express
-const app= express();
+const app = express();
 
 //conncet to database
-//need the mongoose code higher up, it is used to connect to db (works!)
-const MongoClient = require('mongodb').MongoClient;
+//need the mongoose code higher up, it is used to connect to db (works!);
+
 //envoke dotenv
 require('dotenv').config(); 
 
@@ -31,6 +36,30 @@ app.set('view engine', 'ejs');
 //BODYPARSER
 //we can now get data from our form with req.body
 app.use(express.urlencoded({ extended: false}));
+
+// EXPRESS SESSION MIDDLEWARE
+//aquired from express session github
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+
+//CONNECT FLASH MIDDLEWARE
+//gives us access to request.flash
+app.use(flash());
+
+//GLOBAL VARIABLES
+// adding middleware so different flash messages can be different colors
+//takes in three arguments, request response and next
+app.use((req, res, next) => {
+  // set global variables
+  // custom middleware with global variables. We can call the success_msg and error_msg which will come from flash
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next();
+});
+
 
 //ROUTES
 //add a route to pertain to index.js and user.js files in routes folder

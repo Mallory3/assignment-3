@@ -62,7 +62,7 @@ router.post('/register', (req, res) => {
       .then(user => {
         if(user) {
           //user exisits
-          error.push({msg: "Email is already registered"})
+          errors.push({msg: "Email is already registered"})
           res.render('register', {
             errors,
             name,
@@ -78,12 +78,28 @@ router.post('/register', (req, res) => {
           email,
           password
         })
+        //test
         console.log(newUser)
-        res.send('hello')
+        //Hash password so password is encrypted, not in plain text
+        //genSalt is a bcrypt function that passes in a salt argument
+        bcrypt.genSalt(10, (error, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if(err) throw err;
+          //set password to hashed
+          newUser.password = hash;
+          //save user (gives us a promise)
+          newUser.save()
+            // if user gets saved, redirect to login page
+            .then(user => {
+              // creates success message
+              req.flash('success_msg', 'You are now registered and can login');
+              //redirects to login page
+              res.redirect('/users/login');
+            })
+            // if it gives us an error, console.log it
+            .catch(err => console.log(err));
+        }))
       }
-
   });
-
 }
 })
 
