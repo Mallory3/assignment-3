@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 //put schema in variable, create a model from schema that passes in model name, User and our schema
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('Subscribers', UserSchema);
 
 //exort so it can be used in other files
 module.exports = User;
