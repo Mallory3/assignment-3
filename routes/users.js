@@ -24,7 +24,12 @@ router.post('/register', (req, res) => {
   //test
   console.log(req.body)
   //pull things out of request.body
-  const {name, email, password, password2 } = req.body
+  // const {name, email, password, password2 } = req.body
+  const name = req.body.name
+  const email = req.body.email
+  const password = req.body.password
+  const password2 = req.body.password2
+  const adult = Boolean(req.body.adult)
   //validation
   //initialize an array called errors
   let errors = []
@@ -77,7 +82,8 @@ router.post('/register', (req, res) => {
         const newUser = new User({
           name,
           email,
-          password
+          password,
+          adult
         })
         //test
         console.log(newUser)
